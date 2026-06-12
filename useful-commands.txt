@@ -5,6 +5,12 @@ docker:
 docker compose up -d
 docker compose down
 
+docker compose -f docker-compose.prod.yml down
+docker compose -f docker-compose.prod.yml up -d --build
+
+status check:
+docker compose -f docker-compose.prod.yml ps
+
 create migrations:
 dotnet ef migrations add InitialCreate --project RpgTrade.Infrastructure --startup-project RpgTrade.Api --output-dir Persistence/Migrations
 
@@ -13,3 +19,4 @@ dotnet ef database update --project RpgTrade.Infrastructure --startup-project Rp
 
 start API:
 dotnet run --project RpgTrade.Api
+

@@ -24,6 +24,8 @@ services:
       ConnectionStrings__DefaultConnection: ${API_CONNECTION_STRING}
     depends_on:
       - postgres
+    ports:
+    - "127.0.0.1:5001:8080"
     networks:
       - rpgtrade-network
 
