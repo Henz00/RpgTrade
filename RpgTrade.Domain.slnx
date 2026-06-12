@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="RpgTrade.Api/RpgTrade.Api.csproj" Id="331e695f-4eba-4c5a-ba55-86d121cc4142" />
+  <Project Path="RpgTrade.Application/RpgTrade.Application.csproj" Id="83a9055e-6e6b-4f77-883a-e977cff51c17" />
+  <Project Path="RpgTrade.Domain/RpgTrade.Domain.csproj" />
+  <Project Path="RpgTrade.Infrastructure/RpgTrade.Infrastructure.csproj" Id="b6322523-6692-4486-850c-e86be0686767" />
+  <Project Path="RpgTrade.Playground/RpgTrade.Playground.csproj" Id="9fb58853-3fa0-49ca-8301-ea7f0013b5b9" />
+  <Project Path="RpgTrade.Tests/RpgTrade.Tests.csproj" Id="ba4c3fdb-f35a-44fa-bd0f-a635a9952707" />
+  <Project Path="RpgTrade.Web/RpgTrade.Web.csproj" Id="9f4cfcef-b534-402b-95ad-474babca785d" />
+</Solution>

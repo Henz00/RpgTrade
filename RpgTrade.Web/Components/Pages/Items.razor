@@ -1,0 +1,123 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@using System.Net.Http.Json
+@using RpgTrade.Web.Models
+@inject IHttpClientFactory HttpClientFactory
+
+<h1>Item lookup</h1>
+<div class="controls">
+    <div class="controls-left">
+        <label class="results-control">
+            <span>Results: </span>
+            <input type="number" @bind="itemsToFetch" min="1" max="200" />
+        </label>
+    </div>
+
+    <div class="controls-center">
+        <button @onclick="FetchItems" disabled="@isLoading">
+            @(isLoading ? "Searching..." : "Search")
+        </button>
+    </div>
+
+    <div class="controls-right">
+        <button>
+            Show filters
+        </button>
+    </div>  
+
+</div>
+
+
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="error-message">
+        @errorMessage
+    </div>
+}
+else if (isLoading)
+{
+    <p>Loading items...</p>
+}
+else if (!hasSearched)
+{
+    <p>Click the button to search for items.</p>
+}
+else if (items is null || items.Count == 0)
+{
+    <p>No items found.</p>
+}
+else
+{
+    <div class="items-grid">
+        <p>
+            @(items is not null && items.Count != 0
+            ? $"Showing {items.Count} results"
+            : "No results found")
+        </p>
+        @foreach (var item in items)
+        {
+            <div class="item-card">
+                <h2 class="name">@item.Name</h2>
+
+                <div class="item-details">
+                    <p>@item.Rarity @item.BaseType</p>
+                    <p>Item Level: @item.ItemLevel</p>
+                    <p>Class: @item.ItemClass</p>
+                </div>
+
+                <ul class="item-modifiers">
+                    @foreach (var modifier in item.Modifiers)
+                    {
+                        <li>+@modifier.Value @modifier.Name</li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<ItemDto>? items;
+    private string? errorMessage;
+    private bool hasSearched;
+    private bool isLoading;
+    private int itemsToFetch = 10;
+
+    private async Task FetchItems()
+    {
+        try
+        {
+            hasSearched = true;
+            isLoading = true;
+            errorMessage = null;
+
+            if (itemsToFetch < 1)
+            {
+                itemsToFetch = 1;
+            }
+
+            if (itemsToFetch > 200)
+            {
+                itemsToFetch = 200;
+            }
+
+            var http = HttpClientFactory.CreateClient("RpgTradeApi");
+
+            items = await http.GetFromJsonAsync<List<ItemDto>>($"api/items?count={itemsToFetch}");
+        }
+        catch (HttpRequestException ex)
+        {
+            errorMessage = $"Could not connect to the API: {ex.Message}";
+            items = [];
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Something went wrong while loading items: {ex.Message}";
+            items = [];
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}

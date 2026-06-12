@@ -1,0 +1,102 @@
+﻿h1 {
+    color: #eee;
+    margin: 0;
+}
+
+.divider {
+    height: 1px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.4);
+}
+
+button {
+    background-color: #0f304d;
+    color: white;
+}
+
+.controls {
+    display: flex;
+    width: 100%;
+    height: 2.5rem;
+}
+
+.controls > div {
+    width: 25%;
+}
+
+.controls ::deep button {
+    height: 100%;
+}
+
+.controls-center {
+    width: 50% !important;
+}
+
+.controls-center > button {
+    width: 80%;
+    height:100%;
+}
+
+.results-control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ddd;
+    font-size: 0.95rem;
+}
+
+.results-control input {
+    width: 4.5rem;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid #333;
+    background: #102f4a;
+    color: white;
+    text-align: center;
+    outline: none;
+}
+
+.results-control input:focus {
+    border-color: #b6b600;
+}
+
+.items-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    justify-items: center;
+    gap: 1rem;
+}
+
+.items-grid > p {
+    margin: 0;
+    color: white;
+}
+
+.item-card {
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0,0,0,0.8);
+    width: 100%;
+    text-align: center;
+    box-shadow: rgba(0,0,0,0.1) 4px 4px;
+    gap: 0.5rem;
+}
+
+.item-card > * {
+    list-style-type: none;
+    padding: 0;
+    color: rgba(127,127,127,1);
+}
+
+.name {
+    color: rgba(255,255,0,0.7);
+    background-color: rgba(255,191,0,0.2);
+}
+
+.item-details > * {
+    margin: 0;
+}
+
+.item-modifiers > * {
+    color: #88f;
+}

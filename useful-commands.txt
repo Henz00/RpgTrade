@@ -1,0 +1,15 @@
+postgresql terminal:
+docker exec -it rpgtrade-postgres psql -U postgres -d rpgtrade
+
+docker:
+docker compose up -d
+docker compose down
+
+create migrations:
+dotnet ef migrations add InitialCreate --project RpgTrade.Infrastructure --startup-project RpgTrade.Api --output-dir Persistence/Migrations
+
+update the database schema from migrations:
+dotnet ef database update --project RpgTrade.Infrastructure --startup-project RpgTrade.Api
+
+start API:
+dotnet run --project RpgTrade.Api
