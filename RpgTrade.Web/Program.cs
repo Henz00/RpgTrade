@@ -8,7 +8,10 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddHttpClient("RpgTradeApi", client =>
 {
-    client.BaseAddress = new Uri(builder.Configuration["ApiBaseUrl"]!);
+    var apiBaseUrl = builder.Configuration["ApiBaseUrl"]
+        ?? throw new InvalidOperationException("ApiBaseUrl is not configured.");
+
+    client.BaseAddress = new Uri(apiBaseUrl);
 });
 
 var app = builder.Build();
