@@ -6,25 +6,29 @@
 
 <h1>Item lookup</h1>
 <div class="controls">
-    <div class="controls-left">
-        <label class="results-control">
-            <span>Results: </span>
-            <input type="number" @bind="itemsToFetch" min="1" max="200" />
-        </label>
+    <div>
+        <div class="controls-left">
+            <label class="results-control">
+                <span>Results: </span>
+                <input type="number" @bind="itemsToFetch" min="1" max="200" />
+            </label>
+        </div>
+
+        <div class="controls-center">
+            <button @onclick="FetchItems" disabled="@isLoading">
+                @(isLoading ? "Searching..." : "Search")
+            </button>
+        </div>
+
+        <div class="controls-right">
+            <button @onclick="ToggleOptions">
+                @(showFilters ? "Hide filters" : "Show filters")
+            </button>
+        </div>
     </div>
-
-    <div class="controls-center">
-        <button @onclick="FetchItems" disabled="@isLoading">
-            @(isLoading ? "Searching..." : "Search")
-        </button>
+    <div id="OptionsFilterItemSearch" class="options-filter-item-search @(showFilters ? "" : "hidden")">
+        <p>Options will go here</p>
     </div>
-
-    <div class="controls-right">
-        <button>
-            Show filters
-        </button>
-    </div>  
-
 </div>
 
 
@@ -83,6 +87,8 @@ else
     private bool isLoading;
     private int itemsToFetch = 10;
 
+    private bool showFilters;
+
     private async Task FetchItems()
     {
         try
@@ -119,5 +125,10 @@ else
         {
             isLoading = false;
         }
+    }
+
+    private void ToggleOptions()
+    {
+        showFilters = !showFilters;
     }
 }

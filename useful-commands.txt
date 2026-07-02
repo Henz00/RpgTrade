@@ -20,3 +20,5 @@ dotnet ef database update --project RpgTrade.Infrastructure --startup-project Rp
 start API:
 dotnet run --project RpgTrade.Api
 
+start Web (development):
+dotnet watch --project RpgTrade.Web

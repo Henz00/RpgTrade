@@ -30,7 +30,7 @@ namespace RpgTrade.Api.Controllers
                     .ThenInclude(baseType => baseType.ItemClass)
                 .Include(item => item.Modifiers)
                     .ThenInclude(modifier => modifier.Definition)
-                .OrderBy(item => item.Name)
+                .OrderBy(item => item.Id)
                 .Take(count)
                 .Select(item => new ItemDto {
                     Id = item.Id,

@@ -2,10 +2,15 @@ using Microsoft.EntityFrameworkCore;
 using RpgTrade.Infrastructure.Persistence;
 using Scalar.AspNetCore;
 using RpgTrade.Infrastructure.Persistence.Seed;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {

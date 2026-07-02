@@ -1,6 +1,6 @@
 ﻿namespace RpgTrade.Api.Contracts.Items
 {
-    public class ItemDto
+    public sealed class ItemDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;

@@ -18,23 +18,12 @@ button {
     display: flex;
     width: 100%;
     height: 2.5rem;
-}
+    flex-direction: column;
 
-.controls > div {
-    width: 25%;
-}
-
-.controls ::deep button {
-    height: 100%;
-}
-
-.controls-center {
-    width: 50% !important;
-}
-
-.controls-center > button {
-    width: 80%;
-    height:100%;
+    div {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 }
 
 .results-control {
@@ -99,4 +88,14 @@ button {
 
 .item-modifiers > * {
     color: #88f;
+}
+
+.options-filter-item-search {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    margin-bottom: 1rem;
+}
+
+.hidden {
+    display: none !important;
 }

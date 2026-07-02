@@ -19,6 +19,9 @@ namespace RpgTrade.Infrastructure.Persistence.Configurations
                 .WithMany()
                 .HasForeignKey(modifier => modifier.ModifierDefinitionId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasIndex(modifier => new { modifier.ModifierDefinitionId, modifier.Value });
+            builder.HasIndex(modifier => modifier.ItemId);
         }
     }
 }
