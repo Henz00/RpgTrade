@@ -1,4 +1,6 @@
-﻿namespace RpgTrade.Api.Contracts.Items
+﻿using Microsoft.Extensions.Primitives;
+
+namespace RpgTrade.Api.Contracts.Items
 {
     public class ItemModifierDto
     {

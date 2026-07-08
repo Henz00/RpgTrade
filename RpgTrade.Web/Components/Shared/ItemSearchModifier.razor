@@ -1,0 +1,40 @@
+﻿@using RpgTrade.Web.Models
+@using System.Net.Http.Json
+
+
+@if (@modifiers.Count > 0)
+{
+    <ul class="item-search-modifier-holder">
+        @foreach (var modifier in modifiers)
+        {
+            <li class="item-search-modifier" @onclick="() => SelectModifier(modifier)"><span>+# @modifier.Name</span></li>
+        }
+    </ul>
+} else
+{
+    <p>Could not fetch modifiers</p>
+}
+
+@code {
+    [Parameter] public required HttpClient Http { get; set; }
+    [Parameter] public required EventCallback<ItemSearchModifierDto> OnModifierSelected { get; set; }
+    private List<ItemSearchModifierDto> modifiers = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            modifiers = await Http.GetFromJsonAsync<List<ItemSearchModifierDto>>("api/item_modifiers") ?? [];
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            modifiers = [];
+        }
+    }   
+
+    private async Task SelectModifier(ItemSearchModifierDto modifier)
+    {
+        await OnModifierSelected.InvokeAsync(modifier);
+    }
+}

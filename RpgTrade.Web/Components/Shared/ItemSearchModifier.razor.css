@@ -1,0 +1,23 @@
+﻿.item-search-modifier-holder {
+    background-color: #222;
+    padding: 1rem 0;
+    display: grid;
+}
+
+.item-search-modifier {
+    text-align: left;
+    padding: 0.5rem 0;
+
+    span {
+        color: white;
+        font-size: 0.9rem;
+        font-weight: 600;
+        font-variant: small-caps;
+        letter-spacing: 0.04em;
+        text-shadow: 1px 1px 0 black;
+    }
+}
+
+.item-search-modifier:hover {
+    background-color: rgba(95,127,191,0.9);
+}

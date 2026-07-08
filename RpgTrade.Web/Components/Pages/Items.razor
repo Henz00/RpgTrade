@@ -1,16 +1,18 @@
 ﻿@page "/"
 @rendermode InteractiveServer
 @using System.Net.Http.Json
+@using RpgTrade.Web.Components.Shared
 @using RpgTrade.Web.Models
 @inject IHttpClientFactory HttpClientFactory
 
-<h1>Item lookup</h1>
-<div class="controls">
-    <div>
+<h1>Item lookup (Work-in-progress)</h1>
+<h2 style="color: white; font-weight:600">This project is under development, and is made with the sole purpose of learning .NET.</h2>
+<div class="controls-box">
+    <div class="controls">
         <div class="controls-left">
             <label class="results-control">
                 <span>Results: </span>
-                <input type="number" @bind="itemsToFetch" min="1" max="200" />
+                <input type="number" name="number" @bind="itemsToFetch" min="1" max="200" />
             </label>
         </div>
 
@@ -26,11 +28,22 @@
             </button>
         </div>
     </div>
+
     <div id="OptionsFilterItemSearch" class="options-filter-item-search @(showFilters ? "" : "hidden")">
-        <p>Options will go here</p>
+        @foreach (ItemModifierFilter modifier in filters)
+        {
+            <ItemModifier ModifierDefinitionId="@modifier.ModifierDefinitionId" Name="@modifier.Name" />
+        }
+        <div class="filter-box">
+            <ItemSearchModifier Http="apiClient" OnModifierSelected="HandleSelectedModifier" />
+        </div>
     </div>
 </div>
 
+
+<div>
+    <p>Test block</p>
+</div>
 
 @if (!string.IsNullOrWhiteSpace(errorMessage))
 {
@@ -88,6 +101,14 @@ else
     private int itemsToFetch = 10;
 
     private bool showFilters;
+    private List<ItemModifierFilter> filters = new();
+
+    private HttpClient apiClient = default!;
+
+    protected override void OnInitialized()
+    {
+        apiClient = HttpClientFactory.CreateClient("RpgTradeApi");
+    }
 
     private async Task FetchItems()
     {
@@ -107,9 +128,7 @@ else
                 itemsToFetch = 200;
             }
 
-            var http = HttpClientFactory.CreateClient("RpgTradeApi");
-
-            items = await http.GetFromJsonAsync<List<ItemDto>>($"api/items?count={itemsToFetch}");
+            items = await apiClient.GetFromJsonAsync<List<ItemDto>>($"api/items?count={itemsToFetch}");
         }
         catch (HttpRequestException ex)
         {
@@ -130,5 +149,14 @@ else
     private void ToggleOptions()
     {
         showFilters = !showFilters;
+    }
+
+    private void HandleSelectedModifier(ItemSearchModifierDto modifier)
+    {
+        filters.Add(new ItemModifierFilter
+        {
+            ModifierDefinitionId = modifier.ModifierDefinitionId,
+            Name = modifier.Name
+        });
     }
 }

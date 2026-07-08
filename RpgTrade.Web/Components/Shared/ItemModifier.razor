@@ -1,0 +1,14 @@
+﻿<div class="modifier-row">
+    <p>@Name</p>
+    <input type="number" name="minimum" @bind="Minimum" />
+    <input type="number" name="maximum" @bind="Maximum" />
+</div>
+
+
+
+@code {
+    [Parameter] public int ModifierDefinitionId { get; set; }
+    [Parameter] public string Name { get; set; } = string.Empty;
+    public int Minimum;
+    public int Maximum;
+}
