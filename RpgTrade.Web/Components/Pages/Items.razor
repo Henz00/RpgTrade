@@ -33,7 +33,7 @@
     <div id="OptionsFilterItemSearch" class="options-filter-item-search @(showFilters ? "" : "hidden")">
         @foreach (ItemModifierFilter modifier in filters)
         {
-            <ItemModifier ModifierDefinitionId="@modifier.ModifierDefinitionId" Name="@modifier.Name" />
+            <ItemModifier Filter="modifier" />
         }
         <div class="filter-box">
             <ItemSearchModifier Http="apiClient" OnModifierSelected="HandleSelectedModifier" />
@@ -147,15 +147,8 @@ else
 
             response.EnsureSuccessStatusCode();
 
-            var json = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(json);
-            var jsontext = JsonSerializer.Serialize(request, new JsonSerializerOptions
-            {
-                WriteIndented = true
-            });
-
-            Console.WriteLine(jsontext);
-            // items = await response.Content.ReadFromJsonAsync<List<ItemDto>>() ?? [];
+            var result = await response.Content.ReadFromJsonAsync<ItemSearchResponseDto>();
+            items = result?.Items ?? [];
         }
         catch (HttpRequestException ex)
         {
