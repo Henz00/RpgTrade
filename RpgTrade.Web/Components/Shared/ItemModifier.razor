@@ -1,6 +1,7 @@
 ﻿@using RpgTrade.Web.Models
 
 <div class="modifier-row">
+    <button @onclick="RemoveModifier">remove</button>
     <p>@Filter.Name</p>
     <input type="number" placeholder="min" name="minimum" @bind="Filter.Min" />
     <input type="number" placeholder="max" name="maximum" @bind="Filter.Max" />
@@ -8,4 +9,10 @@
 
 @code {
     [Parameter] public required ItemModifierFilter Filter { get; set; }
+    [Parameter] public required EventCallback<ItemModifierFilter> OnRemoveModifier { get; set; }
+
+    private async Task RemoveModifier()
+    {
+        await OnRemoveModifier.InvokeAsync(Filter);
+    }
 }

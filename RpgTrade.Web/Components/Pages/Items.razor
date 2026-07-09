@@ -33,7 +33,7 @@
     <div id="OptionsFilterItemSearch" class="options-filter-item-search @(showFilters ? "" : "hidden")">
         @foreach (ItemModifierFilter modifier in filters)
         {
-            <ItemModifier Filter="modifier" />
+            <ItemModifier Filter="modifier" OnRemoveModifier="RemoveSelectedModifier" />
         }
         <div class="filter-box">
             <ItemSearchModifier Http="apiClient" OnModifierSelected="HandleSelectedModifier" />
@@ -178,5 +178,10 @@ else
             ModifierDefinitionId = modifier.ModifierDefinitionId,
             Name = modifier.Name
         });
+    }
+
+    private void RemoveSelectedModifier(ItemModifierFilter modifier)
+    {
+        filters.Remove(modifier);
     }
 }
