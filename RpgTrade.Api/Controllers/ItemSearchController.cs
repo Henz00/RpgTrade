@@ -49,7 +49,7 @@ namespace RpgTrade.Api.Controllers
 
             var totalCount = await query.CountAsync(cancellationToken);
 
-            var items = await query.OrderBy(item => item.Name).Skip((request.Page - 1) * request.PageSize).Take(request.PageSize).Select(item => new ItemSearchResultDto
+            var items = await query.OrderBy(item => item.Id).Skip((request.Page - 1) * request.PageSize).Take(request.PageSize).Select(item => new ItemSearchResultDto
             {
                 Id = item.Id,
                 Name = item.Name,

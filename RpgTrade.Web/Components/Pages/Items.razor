@@ -31,12 +31,11 @@
     </div>
 
     <div id="OptionsFilterItemSearch" class="options-filter-item-search @(showFilters ? "" : "hidden")">
-        @foreach (ItemModifierFilter modifier in filters)
-        {
-            <ItemModifier Filter="modifier" OnRemoveModifier="RemoveSelectedModifier" />
-        }
-        <div class="filter-box">
-            <ItemSearchModifier Http="apiClient" OnModifierSelected="HandleSelectedModifier" />
+        
+        <button @onclick="ToggleModifierList">Show available modifiers</button>
+
+        <div class="filter-box @(showModifierList ? "" : "hidden")">
+            <ItemSearchModifier Http="apiClient" Filters="filters" />
         </div>
     </div>
 </div>
@@ -89,6 +88,7 @@ else
     </div>
 }
 
+
 @code {
     private List<ItemDto> items = new List<ItemDto>();
     private string? errorMessage;
@@ -96,6 +96,7 @@ else
     private bool isLoading;
     private int itemsToFetch = 10;
 
+    private bool showModifierList;
     private bool showFilters;
     private List<ItemModifierFilter> filters = new();
 
@@ -166,17 +167,8 @@ else
         showFilters = !showFilters;
     }
 
-    private void HandleSelectedModifier(ItemSearchModifierDto modifier)
+    private void ToggleModifierList()
     {
-        filters.Add(new ItemModifierFilter
-        {
-            ModifierDefinitionId = modifier.ModifierDefinitionId,
-            Name = modifier.Name
-        });
-    }
-
-    private void RemoveSelectedModifier(ItemModifierFilter modifier)
-    {
-        filters.Remove(modifier);
+        showModifierList = !showModifierList;
     }
 }

@@ -1,13 +1,19 @@
 ﻿@using RpgTrade.Web.Models
 @using System.Net.Http.Json
 
+@*This come below is the list of selected modifiers*@
+        @foreach (ItemModifierFilter modifier in Filters)
+        {<ItemModifier Filter="modifier" OnRemoveModifier="RemoveSelectedModifier" />}
 
-@if (@modifiers.Count > 0)
+@if (@availableModifiers.Count > 0)
 {
     <ul class="item-search-modifier-holder">
-        @foreach (var modifier in modifiers)
+        @foreach (var modifier in availableModifiers)
         {
-            <li class="item-search-modifier" @onclick="() => SelectModifier(modifier)"><span>+# @modifier.Name</span></li>
+            <li class="item-search-modifier" 
+                @onclick="() => SelectModifier(modifier)">
+                 <span>+# @modifier.Name</span>
+            </li>
         }
     </ul>
 } else
@@ -17,24 +23,32 @@
 
 @code {
     [Parameter] public required HttpClient Http { get; set; }
-    [Parameter] public required EventCallback<ItemSearchModifierDto> OnModifierSelected { get; set; }
-    private List<ItemSearchModifierDto> modifiers = [];
+    [Parameter] public required List<ItemModifierFilter> Filters { get; set; }
+    private List<ItemModifierFilter> availableModifiers = [];
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            modifiers = await Http.GetFromJsonAsync<List<ItemSearchModifierDto>>("api/item_modifiers") ?? [];
+            availableModifiers = await Http.GetFromJsonAsync<List<ItemModifierFilter>>("api/item_modifiers") ?? [];
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
-            modifiers = [];
+            availableModifiers = [];
         }
     }   
 
-    private async Task SelectModifier(ItemSearchModifierDto modifier)
+    private void SelectModifier(ItemModifierFilter modifier)
     {
-        await OnModifierSelected.InvokeAsync(modifier);
+        Filters.Add(modifier);
+        availableModifiers.Remove(modifier);
+    }
+
+    private void RemoveSelectedModifier(ItemModifierFilter modifier)
+    {
+        availableModifiers.Add(modifier);
+        availableModifiers.Sort((m1, m2) => m1.Name.CompareTo(m2.Name));
+        Filters.Remove(modifier);
     }
 }
