@@ -48,7 +48,7 @@
     private void RemoveSelectedModifier(ItemModifierFilter modifier)
     {
         availableModifiers.Add(modifier);
-        availableModifiers.Sort((m1, m2) => m1.Name.CompareTo(m2.Name));
+        availableModifiers.Sort((modifier_1, modifier_2) => modifier_1.Name.CompareTo(modifier_2.Name));
         Filters.Remove(modifier);
     }
 }

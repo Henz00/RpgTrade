@@ -72,9 +72,9 @@ else
                 <h2 class="name">@item.Name</h2>
 
                 <div class="item-details">
-                    <p>@item.Rarity @item.BaseType</p>
+                    <p>@item.Rarity @item.BaseTypeName</p>
                     <p>Item Level: @item.ItemLevel</p>
-                    <p>Class: @item.ItemClass</p>
+                    <p>Class: @item.ItemClassName</p>
                 </div>
 
                 <ul class="item-modifiers">
@@ -87,7 +87,6 @@ else
         }
     </div>
 }
-
 
 @code {
     private List<ItemDto> items = new List<ItemDto>();
@@ -144,6 +143,7 @@ else
             response.EnsureSuccessStatusCode();
 
             var result = await response.Content.ReadFromJsonAsync<ItemSearchResponseDto>();
+            
             items = result?.Items ?? [];
         }
         catch (HttpRequestException ex)

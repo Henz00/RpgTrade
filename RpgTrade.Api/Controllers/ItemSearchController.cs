@@ -57,6 +57,7 @@ namespace RpgTrade.Api.Controllers
                 BaseTypeId = item.BaseType.Id,
                 BaseTypeName = item.BaseType.Name,
                 ItemLevel = item.ItemLevel,
+                ItemClassName = item.BaseType.ItemClass.Name,
                 Modifiers = item.Modifiers.Select(modifier => new ItemModifierDto
                 {
                     ModifierDefinitionId = modifier.ModifierDefinitionId,
