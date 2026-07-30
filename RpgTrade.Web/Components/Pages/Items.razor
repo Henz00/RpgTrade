@@ -13,7 +13,7 @@
         <div class="controls-left">
             <label class="results-control">
                 <span>Results: </span>
-                <input type="number" name="number" @bind="itemsToFetch" min="1" max="200" />
+                <input type="number" name="number" @bind="itemsToFetch" min="1" max="100" />
             </label>
         </div>
 
@@ -63,7 +63,7 @@ else
     <div class="items-grid">
         <p>
             @(items is not null && items.Count != 0
-            ? $"Showing {items.Count} results"
+            ? $"Showing {items.Count} results out of {TotalCount}"
             : "No results found")
         </p>
         @foreach (var item in items)
@@ -90,10 +90,11 @@ else
 
 @code {
     private List<ItemDto> items = new List<ItemDto>();
+    private int TotalCount;
     private string? errorMessage;
     private bool hasSearched;
     private bool isLoading;
-    private int itemsToFetch = 10;
+    private int itemsToFetch = 100;
 
     private bool showModifierList;
     private bool showFilters;
@@ -143,7 +144,8 @@ else
             response.EnsureSuccessStatusCode();
 
             var result = await response.Content.ReadFromJsonAsync<ItemSearchResponseDto>();
-            
+
+            TotalCount = result?.TotalCount ?? 0;
             items = result?.Items ?? [];
         }
         catch (HttpRequestException ex)
