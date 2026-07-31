@@ -5,6 +5,8 @@ namespace RpgTrade.Api.Contracts.Items
     public sealed class ItemSearchRequest
     {
         public int? BaseTypeId { get; set; }
+
+        public int? ItemClassId { get; set; }
         public ItemRarity? Rarity { get; set; }
 
         public List<ModifierFilterRequest> ModifierFilters { get; set; } = [];

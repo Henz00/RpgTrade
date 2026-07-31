@@ -35,10 +35,10 @@ namespace RpgTrade.Api.Controllers
                 .Select(item => new ItemDto {
                     Id = item.Id,
                     Name = item.Name,
-                    Rarity = item.Rarity.ToString(),
+                    Rarity = item.Rarity,
                     ItemLevel = item.ItemLevel,
-                    BaseType = item.BaseType.Name,
-                    ItemClass = item.BaseType.ItemClass.Name,
+                    BaseTypeName = item.BaseType.Name,
+                    ItemClassName = item.BaseType.ItemClass.Name,
                     Modifiers = item.Modifiers
                         .Select(modifier => new ItemModifierDto {
                             Name = modifier.Definition.Name,

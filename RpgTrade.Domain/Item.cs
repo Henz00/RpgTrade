@@ -9,10 +9,10 @@ namespace RpgTrade.Domain
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; } = string.Empty;
         public ItemRarity Rarity { get; set; }
+        //Necessary for EF to work
         public int BaseTypeId { get; set; }
         public BaseType BaseType { get; set; } = null!;
         public int ItemLevel { get; set; }
-        public string ItemClassName { get; set; } = string.Empty;
         public List<ItemModifier> Modifiers { get; set; } = [];
     }
 }

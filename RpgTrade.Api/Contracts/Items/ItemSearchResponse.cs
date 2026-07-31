@@ -2,7 +2,7 @@
 {
     public sealed class ItemSearchResponse
     {
-        public List<ItemSearchResultDto> Items { get; set; } = [];
+        public List<ItemDto> Items { get; set; } = [];
 
         public int Page { get; set; }
         public int PageSize { get; set; }

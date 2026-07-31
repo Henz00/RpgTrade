@@ -30,6 +30,9 @@ namespace RpgTrade.Api.Controllers
 
             var query = _dbContext.Items.AsNoTracking().AsQueryable();
 
+            if(request.ItemClassId is not null)
+                query = query.Where(item => item.BaseType.ItemClassId == request.ItemClassId);
+
             if (request.BaseTypeId is not null)
                 query = query.Where(item => item.BaseType.Id == request.BaseTypeId);
 
@@ -49,15 +52,14 @@ namespace RpgTrade.Api.Controllers
 
             var totalCount = await query.CountAsync(cancellationToken);
 
-            var items = await query.OrderBy(item => item.Id).Skip((request.Page - 1) * request.PageSize).Take(request.PageSize).Select(item => new ItemSearchResultDto
+            var items = await query.OrderBy(item => item.Id).Skip((request.Page - 1) * request.PageSize).Take(request.PageSize).Select(item => new ItemDto
             {
                 Id = item.Id,
                 Name = item.Name,
                 Rarity = item.Rarity,
-                BaseTypeId = item.BaseType.Id,
                 BaseTypeName = item.BaseType.Name,
-                ItemLevel = item.ItemLevel,
                 ItemClassName = item.BaseType.ItemClass.Name,
+                ItemLevel = item.ItemLevel,
                 Modifiers = item.Modifiers.Select(modifier => new ItemModifierDto
                 {
                     ModifierDefinitionId = modifier.ModifierDefinitionId,
